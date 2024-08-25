@@ -6,11 +6,28 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress"; // MUI Circular Progress component for loading
 import Lottie from "lottie-react";
 import emptyAnimation from "../Lottie/search.json";
+import { jwtDecode } from "jwt-decode";
 
 const Blog = ({ genre }) => {
   const [loading, setLoading] = useState(true); // Add loading state
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [Admin, setAdmin] = useState(false); // Use useState for Admin
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("Profile"));
+    const token = storedUser?.token;
+    if (token) {
+      const decodedToken = jwtDecode(token);
+
+      if (decodedToken.email === import.meta.env.VITE_ADMIN_EMAIL) {
+        setAdmin(true); // Update the Admin state
+      }
+
+      console.log("Admin status:", Admin);
+    }
+  }, [location, Admin]); // Add Admin as a dependency
 
   // Fetch articles from Redux store
   const articles = useSelector((state) => state.article);
@@ -81,7 +98,7 @@ const Blog = ({ genre }) => {
               key={obj._id}
             >
               <img
-                className="w-full h-auto object-cover rounded-sm mb-4"
+                className="object-cover min-h-[300px] max-h-[300px] w-auto rounded-sm mb-4"
                 src={obj.coverImage || testPic} // Use a fallback image if coverImage is not available
                 alt={obj.title}
               />
@@ -95,16 +112,18 @@ const Blog = ({ genre }) => {
                   By {obj.author}
                 </p>
               </div>
-              <div className="flex gap-5">
-                <p
-                  onClick={() =>
-                    navigate(`/upload`, { state: { article: obj } })
-                  }
-                >
-                  Edit
-                </p>
-                <p onClick={() => handleDeleteArticle(obj._id)}>Delete</p>
-              </div>
+              {Admin && (
+                <div className="flex gap-5">
+                  <p
+                    onClick={() =>
+                      navigate(`/upload`, { state: { article: obj } })
+                    }
+                  >
+                    Edit
+                  </p>
+                  <p onClick={() => handleDeleteArticle(obj._id)}>Delete</p>
+                </div>
+              )}
             </div>
           );
         })}
