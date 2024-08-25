@@ -14,7 +14,7 @@ const RichEditor = () => {
       insertImageAsBase64URI: true,
     },
     toolbarAdaptive: false,
-    height: "100vh",
+    height: "80vh",
     buttons: [
       "bold",
       "italic",
@@ -88,7 +88,7 @@ const RichEditor = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <div style={editorStyles}>
         <JoditEditor
           ref={editorRef}

@@ -1,0 +1,39 @@
+.homePage_1,
+.homePage_2,
+.homePage_3,
+.homePage_4,
+.homePage_5,
+.homePage_6 {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 5px;
+}
+
+.homePage_5 {
+  background-position: top;
+}
+
+.homePage_1 {
+  background-image: url("../../assets/cute6.jpg");
+}
+
+.homePage_2 {
+  background-image: url("../../assets/fantasyAbs.jpg");
+}
+
+.homePage_3 {
+  background-image: url("../../assets/homePage1.jpg");
+}
+
+.homePage_4 {
+  background-image: url("../../assets/eduAbs.jpg");
+}
+
+.homePage_5 {
+  background-image: url("../../assets/spaceAbs.jpg");
+}
+
+.homePage_6 {
+  background-image: url("../../assets/darkAbs.jpg");
+}
