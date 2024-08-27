@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.js";
 import articleRoutes from "./routes/article.js";
+import storyRoutes from "./routes/story.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(cors(corsOptions));
 // Routes
 app.use("/user", userRoutes);
 app.use("/article", articleRoutes);
+app.use("/story", storyRoutes);
 
 app.get("/", (req, res) => {
   res.send("Mythical Realm Server");

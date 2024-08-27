@@ -48,6 +48,64 @@ export const handleArticle = async (req, res) => {
   }
 };
 
+export const handleStory = async (req, res) => {
+  const {
+    mainStory,
+    title,
+    description,
+    author,
+    category,
+    article,
+    coverImage,
+    status,
+    _id,
+  } = req.body;
+
+  try {
+    let savedStory;
+
+    if (_id) {
+      // If _id exists, update the existing article
+      savedStory = await Article.findByIdAndUpdate(
+        _id,
+        {
+          mainStory,
+          title,
+          description,
+          author,
+          category,
+          article,
+          coverImage,
+          status,
+        },
+        { new: true }
+      );
+    } else {
+      // If no _id, create a new article
+      const newStory = new Article({
+        mainStory,
+        title,
+        description,
+        author,
+        category,
+        article,
+        coverImage, // Base64 string of the image
+        status,
+      });
+      savedStory = await newStory.save();
+    }
+
+    res
+      .status(201)
+      .json({ message: `Story ${status} successfully`, savedStory });
+  } catch (error) {
+    console.error(`Error ${status} article:`, error);
+    res
+      .status(500)
+      .json({ message: `An error occurred while ${status} the article` });
+  }
+};
+
 // Controller to get articles based on status and category
 export const getArticle = async (req, res) => {
   const { genre } = req.query; // Retrieve genre from query parameters

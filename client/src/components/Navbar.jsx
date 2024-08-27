@@ -17,6 +17,7 @@ const Navbar = () => {
 
   // Auto logout if token is expired.
   useEffect(() => {
+    window.scrollTo(0, 0);
     const storedUser = JSON.parse(localStorage.getItem("Profile"));
     if (storedUser) {
       const token = storedUser.token;
@@ -33,6 +34,7 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    // Scroll to top when the component mounts
     const storedUser = JSON.parse(localStorage.getItem("Profile"));
     const token = storedUser?.token;
     if (token) {

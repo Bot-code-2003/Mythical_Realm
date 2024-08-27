@@ -2,18 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArticle, handleDelete } from "../actions/auth";
 import testPic from "../assets/blog.webp";
-import { useNavigate } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress"; // MUI Circular Progress component for loading
+import { useNavigate, useLocation } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 import Lottie from "lottie-react";
 import emptyAnimation from "../Lottie/search.json";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Corrected import statement
+import StoryList from "./StoryList";
 
-const Blog = ({ genre }) => {
-  const [loading, setLoading] = useState(true); // Add loading state
+const Blogs = ({ genre }) => {
+  const location = useLocation();
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [Admin, setAdmin] = useState(false); // Use useState for Admin
+  const [Admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    // Disable browser's automatic scroll restoration
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    // Ensure the page scrolls to the top after the content is fully loaded
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100); // Slight delay to allow the page to fully load
+  }, []);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("Profile"));
@@ -27,9 +41,8 @@ const Blog = ({ genre }) => {
 
       console.log("Admin status:", Admin);
     }
-  }, [location, Admin]); // Add Admin as a dependency
+  }, [location, Admin]);
 
-  // Fetch articles from Redux store
   const articles = useSelector((state) => state.article);
 
   useEffect(() => {
@@ -37,10 +50,10 @@ const Blog = ({ genre }) => {
     const fetchData = async () => {
       try {
         await dispatch(getArticle(genre)); // Dispatch action to get articles on mount
-        setLoading(false); // Set loading to false after articles are fetched
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching articles:", error);
-        setLoading(false); // Set loading to false even if there is an error
+        setLoading(false);
       }
     };
 
@@ -56,8 +69,8 @@ const Blog = ({ genre }) => {
   const generateSlug = (title) => {
     return title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-") // Replace spaces and special characters with hyphens
-      .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   };
 
   const handleArticleClick = (id, slugTitle, slugGenre) => {
@@ -74,6 +87,7 @@ const Blog = ({ genre }) => {
 
   return (
     <>
+      <h1 className="mx-auto p-4 text-2xl text-center">Articles</h1>
       {articles.length === 0 && (
         <div className="flex flex-col justify-center items-center">
           <Lottie
@@ -98,8 +112,8 @@ const Blog = ({ genre }) => {
               key={obj._id}
             >
               <img
-                className="object-cover min-h-[300px] max-h-[300px] w-auto rounded-sm mb-4"
-                src={obj.coverImage || testPic} // Use a fallback image if coverImage is not available
+                className="object-cover min-h-[300px] max-h-[300px] w-full rounded-sm mb-4"
+                src={obj.coverImage || testPic}
                 alt={obj.title}
               />
               <div className="flex flex-col space-y-2">
@@ -132,4 +146,4 @@ const Blog = ({ genre }) => {
   );
 };
 
-export default Blog;
+export default Blogs;

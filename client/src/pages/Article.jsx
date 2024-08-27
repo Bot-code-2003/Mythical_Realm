@@ -13,6 +13,10 @@ const Article = () => {
   const article = useSelector((state) => state.singleArticle);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         await dispatch(getSingleArticle(id));

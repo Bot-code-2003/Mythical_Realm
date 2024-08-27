@@ -7,8 +7,8 @@ import { Routes, Route } from "react-router-dom";
 import ImageInput from "./components/ImageInput";
 import RichEditor from "./components/RichEditor";
 import HomePage from "./pages/home/HomePage";
-import Blog from "./pages/Blog";
-import Story from "./pages/Story";
+import Section from "./pages/Section";
+// import Story from "./pages/Story";
 import Navbar from "./components/Navbar";
 import PublishGuidelines from "./pages/PublishGuidelines";
 import HomePageNav from "./pages/home/HomePageNav";
@@ -17,6 +17,11 @@ import Auth from "./pages/auth/Auth";
 import Profile from "./pages/Profile";
 import Upload from "./pages/Upload";
 import Article from "./pages/Article";
+import UploadStory from "./pages/UploadStory";
+import StoryList from "./pages/StoryList";
+import DetailedStory from "./pages/DetailedStory";
+import DetailedChapter from "./pages/DetailedChapter";
+import Blogs from "./pages/Blogs";
 
 const App = () => {
   return (
@@ -49,7 +54,7 @@ const App = () => {
           element={
             <>
               <Navbar />
-              <Blog genre="All" />
+              <Section genre="All" />
               <Footer />
             </>
           }
@@ -60,7 +65,7 @@ const App = () => {
           element={
             <>
               <Navbar />
-              <Blog genre="Fantasy" />
+              <Section genre="Fantasy" />
               <Footer />
             </>
           }
@@ -71,7 +76,7 @@ const App = () => {
           element={
             <>
               <Navbar />
-              <Blog genre="Dark Fantasy" />
+              <Section genre="Dark Fantasy" />
 
               <Footer />
             </>
@@ -112,8 +117,57 @@ const App = () => {
           }
         />
 
+        <Route
+          path="allBlogs"
+          element={
+            <>
+              <Navbar />
+              <HomePageNav />
+              <Blogs genre="All" />
+
+              <Footer />
+            </>
+          }
+        />
+
         <Route path="/upload" element={<Upload />} />
         <Route path="/saved" />
+        <Route path="/testing" element={<UploadStory />} />
+        <Route
+          path="/allStories"
+          element={
+            <>
+              <Navbar />
+              <HomePageNav />
+              <StoryList genre="All" />
+
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/story/:storyCategory/:storyName/:storyId"
+          element={
+            <>
+              <Navbar />
+              <HomePageNav />
+              <DetailedStory />
+
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/story/:storyCategory/:storyName/chapter/:chapterName"
+          element={
+            <>
+              <Navbar />
+              <HomePageNav />
+              <DetailedChapter />
+              <Footer />
+            </>
+          }
+        />
       </Routes>
     </div>
   );
