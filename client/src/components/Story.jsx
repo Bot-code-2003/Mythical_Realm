@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { handleDeleteStory } from "../actions/auth";
+import { handleDeleteStory } from "../actions/story";
 import { useDispatch } from "react-redux";
 
 const Story = ({ story }) => {
@@ -61,14 +61,23 @@ const Story = ({ story }) => {
         <img
           src={story.storyImage}
           alt={story.storyName}
-          className="object-cover min-h-[300px] max-h-[300px] w-full rounded-sm mb-4"
+          className="object-cover min-h-[480px] max-h-[480px] sm:min-h-[360px] sm:max-h-[360px] w-full rounded-sm mb-4"
         />
         <div className="flex flex-col font-crimson">
           <p className="text-red-500 font-patrick text-lg">
             {story.storyCategory}
           </p>
           <h2 className="text-2xl mb-1 hover:underline">{story.storyName}</h2>
-          <p className="text-gray-700 text-md">{story.storyDescription}</p>
+          <p className="text-gray-700 text-md mb-2 ">
+            {story.storyDescription.length > 100 ? (
+              <>
+                {story.storyDescription.slice(0, 100)}
+                <span className="text-blue-500">... Read more</span>
+              </>
+            ) : (
+              story.storyDescription
+            )}
+          </p>
           <p className="font-inter font-semibold text-gray-900 text-sm">
             By {story.storyAuthor ? story.storyAuthor : "Anonymous"}
           </p>

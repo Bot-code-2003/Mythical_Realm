@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Compressor from "compressorjs";
 import { useDispatch } from "react-redux";
-import { handleStory } from "../actions/auth";
+import { handleStory } from "../actions/story";
 import { useLocation } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill's CSS

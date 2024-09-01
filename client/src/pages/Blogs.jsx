@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getArticle, handleDelete } from "../actions/auth";
+import { getArticle, handleDelete } from "../actions/article";
 import testPic from "../assets/blog.webp";
 import { useNavigate, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -49,7 +49,7 @@ const Blogs = ({ genre }) => {
     document.title = `Mythical Realm | ${genre}`;
     const fetchData = async () => {
       try {
-        await dispatch(getArticle(genre)); // Dispatch action to get articles on mount
+        await dispatch(getArticle(genre)); // Dispatch action to get articles "All, dont get confused by name getArticle, its plural" on mount
         setLoading(false);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -121,7 +121,17 @@ const Blogs = ({ genre }) => {
                   {obj.category}
                 </p>
                 <h2 className="text-2xl mb-1 hover:underline">{obj.title}</h2>
-                <p className="text-gray-700 text-md">{obj.description}</p>
+                <p className="text-gray-700 text-md">
+                  {obj.description.length > 100 ? (
+                    <>
+                      {obj.description.slice(0, 100)}
+                      <span className="text-blue-500">... Read more</span>
+                    </>
+                  ) : (
+                    obj.description
+                  )}
+                </p>
+
                 <p className="font-inter font-semibold text-gray-900 text-sm">
                   By {obj.author}
                 </p>

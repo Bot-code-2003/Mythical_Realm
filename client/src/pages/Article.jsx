@@ -1,38 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; // Import useParams
 import CircularProgress from "@mui/material/CircularProgress";
 import Lottie from "lottie-react";
 import emptyAnimation from "../Lottie/search.json";
-import { getSingleArticle } from "../actions/auth"; // Assuming you have this action
 
 const Article = () => {
-  const { title, genre, id } = useParams(); // Get params from URL
+  const { id } = useParams(); // Get params from URL
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const article = useSelector((state) => state.singleArticle);
+
+  // Get the array of articles from the Redux store
+  const articles = useSelector((state) => state.article);
+
+  // Find the article that matches the id from the URL params
+  const article = articles.find((article) => article._id === id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Simulate loading for effect (remove if not needed)
+    const timer = setTimeout(() => setLoading(false), 100);
+    return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(getSingleArticle(id));
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching article:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    console.log("Article data:", article); // Debugging log
-  }, [article]);
 
   const formattedDate = article
     ? new Date(article.createdAt).toLocaleDateString("en-US", {
@@ -86,10 +74,11 @@ const Article = () => {
         </div>
       )}
       {article && (
-        <div className="border-t border-gray-300 pt-6 px-10">
-          <div className="text-2xl leading-relaxed font-crimson mb-12 first-letter:text-5xl first-letter:font-bold">
-            {article.article}
-          </div>
+        <div className="border-t border-gray-300 pt-6 px-2 sm:px-10">
+          <div
+            className="text-2xl leading-relaxed font-crimson mb-12 first-letter:text-5xl first-letter:font-bold"
+            dangerouslySetInnerHTML={{ __html: article.article }}
+          />
         </div>
       )}
       {article && (

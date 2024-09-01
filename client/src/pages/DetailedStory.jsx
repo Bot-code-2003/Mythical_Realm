@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
-import { getSingleStory } from "../actions/auth";
 
 const DetailedStory = () => {
   const { storyId } = useParams();
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
   const story = useSelector((state) =>
     state.stories.find((s) => s._id === storyId)
   );
+
+  console.log(story);
 
   const [loading, setLoading] = useState(true);
 
@@ -20,8 +19,6 @@ const DetailedStory = () => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-
-    dispatch(getSingleStory(story));
 
     setTimeout(() => {
       window.scrollTo(0, 0);
@@ -31,7 +28,7 @@ const DetailedStory = () => {
     if (story) {
       setLoading(false);
     }
-  }, [story]);
+  }, []);
 
   const slug = (name) => {
     return name
@@ -92,7 +89,7 @@ const DetailedStory = () => {
           <p className="text-md text-red-500 text-center font-kalam mb-3">
             {story.storyCategory}
           </p>
-          <p className="story-description p-2 text-center text-2xl mb-4">
+          <p className="story-description p-2 text-center text-gray-600 text-2xl mb-4">
             {story.storyDescription}
           </p>
           <p className="text-center font-inter text-xl font-semibold">
@@ -117,11 +114,13 @@ const DetailedStory = () => {
               )
             }
           >
-            <img
-              src={chapter.chapterImage}
-              alt={chapter.chapterName}
-              className="chapter-image w-full h-48 object-cover rounded mb-2"
-            />
+            {chapter.chapterImage && (
+              <img
+                src={chapter.chapterImage}
+                alt={chapter.chapterName}
+                className="chapter-image w-full h-48 object-cover rounded mb-2"
+              />
+            )}
             <h3 className="chapter-name text-2xl font-semibold hover:underline">
               {chapter.chapterName}
             </h3>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getStories } from "../actions/auth"; // Ensure the path is correct
+import { getStories } from "../actions/story"; // Ensure the path is correct
 import Story from "../components/Story";
 import Lottie from "lottie-react";
 import emptyAnimation from "../Lottie/search.json";
@@ -10,8 +10,6 @@ const StoryList = ({ genre }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const stories = useSelector((state) => state.stories);
-
-  console.log("Stories:", stories);
 
   useEffect(() => {
     // Disable browser's automatic scroll restoration

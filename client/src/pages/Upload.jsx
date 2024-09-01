@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Compressor from "compressorjs";
 import { useDispatch } from "react-redux";
-import { handleArticle } from "../actions/auth"; // Updated import to use a single action
+import { handleArticle } from "../actions/article";
 import { useLocation } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import the styles
 
 const Upload = () => {
   const location = useLocation();
@@ -27,11 +29,11 @@ const Upload = () => {
 
     if (file && file.size > 300 * 1024) {
       new Compressor(file, {
-        quality: 0.5, // Compress by 50%
+        quality: 0.5,
         success: (compressedFile) => {
           const reader = new FileReader();
           reader.onloadend = () => {
-            setCoverImage(reader.result); // Set Base64 string
+            setCoverImage(reader.result);
             console.log(
               "File compressed and converted to Base64:",
               reader.result
@@ -40,7 +42,7 @@ const Upload = () => {
           reader.onerror = () => {
             setUploadError("Failed to read file. Please try again.");
           };
-          reader.readAsDataURL(compressedFile); // Convert compressed file to Base64
+          reader.readAsDataURL(compressedFile);
         },
         error(err) {
           console.error("Compression error:", err.message);
@@ -50,18 +52,17 @@ const Upload = () => {
     } else {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setCoverImage(reader.result); // Set Base64 string
+        setCoverImage(reader.result);
         console.log("File converted to Base64:", reader.result);
       };
       reader.onerror = () => {
         setUploadError("Failed to read file. Please try again.");
       };
-      reader.readAsDataURL(file); // Convert file to Base64
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = (status) => {
-    // Dispatch the action with the dynamic status
     dispatch(
       handleArticle({
         coverImage,
@@ -71,7 +72,7 @@ const Upload = () => {
         category,
         article,
         status,
-        _id: articleToEdit._id, // Pass the ID if it exists, to update the article
+        _id: articleToEdit._id,
       })
     );
     console.log(`Article ${status}`);
@@ -125,19 +126,9 @@ const Upload = () => {
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-semibold">Article</label>
-        <textarea
-          value={article}
-          onChange={(e) => setArticle(e.target.value)}
-          className="w-full p-2 border border-gray-300 h-64"
-        ></textarea>
+        <ReactQuill value={article} onChange={setArticle} className="h-64" />
       </div>
       <div className="flex gap-4">
-        {/* <button
-          onClick={() => handleSubmit("draft")}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Save
-        </button> */}
         <button
           onClick={() => handleSubmit("published")}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"

@@ -1,9 +1,11 @@
 const initialState = {
-  article: [], // Initialize as an array
-  singleArticle: [],
-  stories: [], // Add stories state
-  singleStory: null, // Add singleStory state
-  chapter: null, // Add chapter state
+  articles: [], // all the articles
+  // singleArticle: [], // single article
+  stories: [], // all the stories
+  // singleStory: null, // single story
+
+  // Add chapter state as of now not in use.
+  // chapter: null, // Add chapter state
 };
 
 export default (state = initialState, action) => {
@@ -15,38 +17,14 @@ export default (state = initialState, action) => {
     case "GET_ARTICLE":
       return {
         ...state,
-        article:
+        articles:
           action.payload && action.payload.length > 0 ? action.payload : [], // Set to [] if payload is empty
-      };
-
-    case "GET_SINGLE_ARTICLE":
-      return {
-        ...state,
-        singleArticle: action.payload,
       };
 
     case "GET_STORIES":
       return {
         ...state,
         stories: action.payload.length > 0 ? action.payload : [], // Handle stories payload
-      };
-
-    case "GET_SINGLE_STORY":
-      return {
-        ...state,
-        singleStory: action.payload,
-      };
-
-    case "GET_STORY_CHAPTER":
-      return {
-        ...state,
-        chapter: action.payload, // Update the chapter state with the payload
-      };
-
-    case "CLEAR_SINGLE_STORY":
-      return {
-        ...state,
-        singleStory: null,
       };
 
     default:

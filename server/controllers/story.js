@@ -71,49 +71,6 @@ export const getStories = async (req, res) => {
 };
 
 // Controller to get a single story by ID
-export const getSingleStory = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const story = await Story.findById(id);
-    if (story) {
-      res.status(200).json(story);
-    } else {
-      res.status(404).json({ message: "Story not found" });
-    }
-  } catch (error) {
-    console.error("An unexpected error occurred:", error);
-    res.status(500).json({ message: "Failed to retrieve the story", error });
-  }
-};
-
-export const getStoryChapter = async (req, res) => {
-  const { storyId, chapterId } = req.params;
-  console.log("storyId, chapterId", storyId, chapterId);
-
-  try {
-    // Find the story by ID
-    const story = await Story.findById(storyId);
-    if (!story) {
-      return res.status(404).json({ message: "Story not found" });
-    } else {
-      console.log("story found");
-    }
-
-    // Find the chapter within the story's chapters array
-    const chapter = story.chapters.id(chapterId);
-    if (!chapter) {
-      return res.status(404).json({ message: "Chapter not found" });
-    } else {
-      console.log("chapter found");
-    }
-
-    res.json(chapter);
-  } catch (error) {
-    console.error("An unexpected error occurred:", error);
-    res.status(500).json({ message: "Failed to retrieve the chapter", error });
-  }
-};
 
 export const handleDelete = async (req, res) => {
   const { id } = req.params;

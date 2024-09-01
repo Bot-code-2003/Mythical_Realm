@@ -84,6 +84,18 @@ const App = () => {
         />
 
         <Route
+          path="/space"
+          element={
+            <>
+              <Navbar />
+              <Section genre="Space" />
+
+              <Footer />
+            </>
+          }
+        />
+
+        <Route
           path="/auth"
           element={
             <>

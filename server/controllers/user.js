@@ -59,6 +59,6 @@ export const handleLogin = async (req, res) => {
     console.error("Error handling login/signup", error);
     return res
       .status(500)
-      .json({ message: "Server error, please try again later" });
+      .json({ message: "Server error, please try again later (Nigga)" });
   }
 };
