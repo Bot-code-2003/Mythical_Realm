@@ -3,6 +3,7 @@ const initialState = {
   // singleArticle: [], // single article
   stories: [], // all the stories
   // singleStory: null, // single story
+  story: null,
 
   // Add chapter state as of now not in use.
   // chapter: null, // Add chapter state
@@ -25,6 +26,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         stories: action.payload.length > 0 ? action.payload : [], // Handle stories payload
+      };
+
+    case "GET_STORY":
+      return {
+        ...state,
+        story: action.payload, // Handle story payload
       };
 
     default:

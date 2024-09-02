@@ -22,6 +22,7 @@ import StoryList from "./pages/StoryList";
 import DetailedStory from "./pages/DetailedStory";
 import DetailedChapter from "./pages/DetailedChapter";
 import Blogs from "./pages/Blogs";
+import Gemini from "./components/Gemini";
 
 const App = () => {
   return (
@@ -176,6 +177,19 @@ const App = () => {
               <Navbar />
               <HomePageNav />
               <DetailedChapter />
+              <Footer />
+            </>
+          }
+        />
+
+        <Route
+          path="/gemini"
+          element={
+            <>
+              <Navbar />
+              <HomePageNav />
+              <Gemini />
+
               <Footer />
             </>
           }

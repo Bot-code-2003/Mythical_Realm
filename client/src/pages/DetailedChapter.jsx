@@ -10,8 +10,8 @@ const DetailedChapter = () => {
   const queryParams = new URLSearchParams(location.search);
   const storyId = queryParams.get("storyId");
 
-  const story = useSelector((state) =>
-    state.stories.find((s) => s._id === storyId)
+  const story = useSelector(
+    (state) => state.stories.find((s) => s._id === storyId) || state.story // Either find it in stories or use the fetched single story
   );
 
   // State to track the current chapter index

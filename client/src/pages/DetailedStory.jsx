@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getStory } from "../actions/story"; // Ensure you import your action
 
 const DetailedStory = () => {
   const { storyId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const story = useSelector((state) =>
-    state.stories.find((s) => s._id === storyId)
+  const story = useSelector(
+    (state) => state.stories.find((s) => s._id === storyId) || state.story // Either find it in stories or use the fetched single story
   );
 
-  console.log(story);
-
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!story);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -24,11 +24,14 @@ const DetailedStory = () => {
       window.scrollTo(0, 0);
     }, 100);
 
-    // If story is available in state, stop loading
-    if (story) {
+    if (!story) {
+      dispatch(getStory(storyId)).then(() => {
+        setLoading(false);
+      });
+    } else {
       setLoading(false);
     }
-  }, []);
+  }, [dispatch, story, storyId]);
 
   const slug = (name) => {
     return name
@@ -74,15 +77,15 @@ const DetailedStory = () => {
 
   return (
     <div className="detailed-story container font-crimson mx-auto p-4">
-      <div className=" sm:flex items-center mb-10">
-        <div className="sm:w-1/2">
+      <div className=" sm:flex items-center justify-around mb-10">
+        <div className="sm:w-1/3 flex justify-center">
           <img
             src={story.storyImage}
             alt={story.storyName}
             className="object-cover h-[500px] w-auto rounded-sm mb-4"
           />
         </div>
-        <div className="sm:w-1/2">
+        <div className="sm:w-2/3">
           <h1 className="text-4xl font-semibold text-center mb-1">
             {story.storyName}
           </h1>
@@ -106,10 +109,10 @@ const DetailedStory = () => {
             className="chapter-card cursor-pointer"
             onClick={() =>
               handleChapterClick(
-                story._id, // Pass the story ID first
-                story.storyCategory, // Then pass the story category
-                story.storyName, // Then pass the story name
-                chapter.chapterName, // Then pass the chapter name
+                story._id,
+                story.storyCategory,
+                story.storyName,
+                chapter.chapterName,
                 chapter._id
               )
             }

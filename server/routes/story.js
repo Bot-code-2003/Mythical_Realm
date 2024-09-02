@@ -1,5 +1,10 @@
 import express from "express";
-import { handleStory, getStories, handleDelete } from "../controllers/story.js";
+import {
+  handleStory,
+  getStories,
+  getStory,
+  handleDelete,
+} from "../controllers/story.js";
 
 const router = express.Router();
 
@@ -8,6 +13,9 @@ router.post("/submit", handleStory);
 
 // Route to get stories by genre
 router.get("/getStories", getStories);
+
+// Route to get a single story
+router.get("/getStory/:id", getStory);
 
 //////////////////////////////////////
 // These are currently not in use.////

@@ -43,7 +43,8 @@ const Blogs = ({ genre }) => {
     }
   }, [location, Admin]);
 
-  const articles = useSelector((state) => state.article);
+  const articles = useSelector((state) => state.articles);
+  console.log("articles", articles);
 
   useEffect(() => {
     document.title = `Mythical Realm | ${genre}`;

@@ -26,4 +26,6 @@ export const handleStory = (storyData) => API.post("/story/submit", storyData);
 export const getStories = (genre) =>
   API.get(`/story/getStories?genre=${genre}`);
 
+export const getStory = (id) => API.get(`/story/getStory/${id}`);
+
 export const handleDeleteStory = (id) => API.delete(`/story/delete/${id}`);

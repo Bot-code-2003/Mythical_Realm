@@ -10,7 +10,7 @@ const Article = () => {
   const [loading, setLoading] = useState(true);
 
   // Get the array of articles from the Redux store
-  const articles = useSelector((state) => state.article);
+  const articles = useSelector((state) => state.articles);
 
   // Find the article that matches the id from the URL params
   const article = articles.find((article) => article._id === id);

@@ -121,6 +121,12 @@ const Navbar = () => {
         <div className="text-sm font-semibold w-1/4 text-center text-gray-600 ">
           <div className="hidden sm:flex relative gap-5 justify-end items-center">
             <p
+              onClick={() => navigate("/gemini")}
+              className="cursor-pointer hover:underline"
+            >
+              Get Inspired
+            </p>
+            <p
               onClick={() => navigate("/publish")}
               className="cursor-pointer hover:underline"
             >

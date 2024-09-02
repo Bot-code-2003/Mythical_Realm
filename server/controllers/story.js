@@ -84,3 +84,16 @@ export const handleDelete = async (req, res) => {
       .json({ message: "An error occurred while deleting the story" });
   }
 };
+
+export const getStory = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const story = await Story.findById(id);
+    res.status(200).json(story);
+  } catch (error) {
+    console.error("Error retrieving story:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while retrieving the story" });
+  }
+};

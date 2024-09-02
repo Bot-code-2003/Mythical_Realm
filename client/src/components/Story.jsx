@@ -61,7 +61,7 @@ const Story = ({ story }) => {
         <img
           src={story.storyImage}
           alt={story.storyName}
-          className="object-cover min-h-[480px] max-h-[480px] sm:min-h-[360px] sm:max-h-[360px] w-full rounded-sm mb-4"
+          className="object-cover min-h-[480px] max-h-[480px] sm:min-h-[460px] sm:max-h-[460px] w-full rounded-sm mb-4"
         />
         <div className="flex flex-col font-crimson">
           <p className="text-red-500 font-patrick text-lg">
