@@ -18,6 +18,7 @@ export const handleStory = (storyData) => async (dispatch) => {
 //To get stories.
 export const getStories = (genre) => async (dispatch) => {
   try {
+    if (!genre) genre = "All";
     const { data } = await api.getStories(genre);
     const action = {
       type: "GET_STORIES",
@@ -52,6 +53,34 @@ export const handleDeleteStory = (id) => async (dispatch) => {
       payload: id,
     };
     dispatch(action);
+  } catch (error) {
+    console.error("An unexpected error occurred:", error);
+  }
+};
+
+export const handleCheckboxChangeStory = (data) => async (dispatch) => {
+  try {
+    const status = data[0].actions; //either homepage or featured
+    const id = data[0].id;
+    // console.log("In actions :", status);
+    await api.handleCheckboxChangeStory(id, status);
+    const action = {
+      type: "HANDLE_CHECKBOX_CHANGE_STORY",
+      payload: data,
+    };
+    dispatch(action);
+  } catch (error) {
+    console.error("An unexpected error occurred:", error);
+  }
+};
+
+export const getHomepageStories = () => async (dispatch) => {
+  try {
+    console.log("getHomepageStories called");
+
+    const { data } = await api.getHomepageStories();
+    console.log("Home page Stories fetched");
+    return data;
   } catch (error) {
     console.error("An unexpected error occurred:", error);
   }

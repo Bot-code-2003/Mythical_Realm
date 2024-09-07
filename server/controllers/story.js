@@ -55,10 +55,16 @@ export const handleStory = async (req, res) => {
 
 export const getStories = async (req, res) => {
   const { genre } = req.query;
+  // console.log("getStories controller called with genre:", genre);
 
   try {
     if (genre === "All") {
       const stories = await Story.find();
+      // console.log("Stories:", stories);
+      for (let i = 0; i < stories.length; i++) {
+        console.log("Story:", stories[i].storyCategory);
+      }
+
       res.status(200).json(stories);
     } else {
       const stories = await Story.find({ storyCategory: genre });
@@ -95,5 +101,55 @@ export const getStory = async (req, res) => {
     res
       .status(500)
       .json({ message: "An error occurred while retrieving the story" });
+  }
+};
+
+export const handleCheckboxChangeStory = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  console.log(
+    "handleCheckboxChangeStory controller called with id:",
+    id,
+    "status:",
+    status
+  );
+
+  try {
+    // Find the story by its ID
+    let story = await Story.findById(id);
+
+    if (!story) {
+      return res.status(404).json({ message: "Story not found" });
+    }
+
+    // Update the status and set homePage to true if status is 'homepage'
+    story.status = status;
+    story.homePage = status === "homepage";
+
+    // Save the updated story
+    await story.save();
+
+    res.status(200).json({ message: "Story updated successfully", story });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getHomepageStories = async (req, res) => {
+  try {
+    // Find all stories where homePage is true
+    const stories = await Story.find({ homePage: true });
+
+    if (!stories || stories.length === 0) {
+      return res.status(404).json({ message: "No homepage stories found" });
+    }
+
+    // Send the stories in the response
+    res.status(200).json(stories);
+  } catch (error) {
+    console.error("Error fetching homepage stories:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

@@ -23,6 +23,7 @@ import DetailedStory from "./pages/DetailedStory";
 import DetailedChapter from "./pages/DetailedChapter";
 import Blogs from "./pages/Blogs";
 import Gemini from "./components/Gemini";
+import AdminPage from "./pages/AdminPage";
 
 const App = () => {
   return (
@@ -190,6 +191,18 @@ const App = () => {
               <HomePageNav />
               <Gemini />
 
+              <Footer />
+            </>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <>
+              <Navbar />
+              <HomePageNav />
+              <AdminPage />
               <Footer />
             </>
           }

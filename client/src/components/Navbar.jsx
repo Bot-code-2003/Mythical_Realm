@@ -26,7 +26,7 @@ const Navbar = () => {
         const decodedToken = jwtDecode(token);
         console.log("Decoded token:", decodedToken);
 
-        if (decodedToken.exp * 1000 < new Date().getTime()) {
+        if (decodedToken.exp * 5000 < new Date().getTime()) {
           handleLogout();
         }
       }
@@ -176,14 +176,23 @@ const Navbar = () => {
                     >
                       {Admin && "Upload"}
                     </p>
-                    {Admin && (
-                      <p
-                        onClick={() => navigate("/saved")}
-                        className="hover:bg-gray-300 text-left cursor-pointer p-2"
-                      >
-                        Saved
-                      </p>
-                    )}
+                    {Admin &&
+                      ((
+                        <p
+                          onClick={() => navigate("/saved")}
+                          className="hover:bg-gray-300 text-left cursor-pointer p-2"
+                        >
+                          Saved
+                        </p>
+                      ),
+                      (
+                        <p
+                          className="hover:bg-gray-300 text-left cursor-pointer p-2"
+                          onClick={() => navigate("/admin")}
+                        >
+                          Admin Panel
+                        </p>
+                      ))}
                   </div>
                 )}
               </>

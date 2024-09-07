@@ -18,6 +18,7 @@ export const handleArticle = (articleData) => async (dispatch) => {
 //To get articles.
 export const getArticle = (genre) => async (dispatch) => {
   try {
+    if (!genre) genre = "All";
     const { data } = await api.getArticle(genre);
     // console.log("data ", data);
     const action = {

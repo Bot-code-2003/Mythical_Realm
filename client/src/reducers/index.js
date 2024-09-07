@@ -1,3 +1,5 @@
+import HomePage from "../pages/home/HomePage";
+
 const initialState = {
   articles: [], // all the articles
   // singleArticle: [], // single article

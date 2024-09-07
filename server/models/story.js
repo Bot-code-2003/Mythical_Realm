@@ -52,6 +52,10 @@ const StorySchema = new Schema(
       required: true,
       trim: true,
     },
+    homePage: {
+      type: Boolean,
+      default: false,
+    },
     chapters: [ChapterSchema], // Array of chapters
   },
   {

@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
 import LockIcon from "@mui/icons-material/Lock";
-
+import { useDispatch } from "react-redux";
 import HomePageNav from "./HomePageNav";
+import HomepageStories from "./HomepageStories";
+
+import { getHomepageStories } from "../../actions/story";
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const [stories, setStories] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
     document.title = "The Mythical Realm";
   }, []);
@@ -66,17 +73,24 @@ const HomePage = () => {
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === HeroSection.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000); // Change every 4 seconds
+    }, 5000); // Change every 5 seconds
 
     return () => clearInterval(interval); // Clear interval on component unmount to avoid memory leaks.
-  }, [currentIndex]);
+  }, []);
+
+  // Fetch homepage stories
+  useEffect(() => {
+    dispatch(getHomepageStories()).then((response) => {
+      if (response && response.length > 0) {
+        setStories(response);
+      }
+    });
+  }, [dispatch]);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
@@ -147,6 +161,11 @@ const HomePage = () => {
       </div>
 
       <HomePageNav />
+      {stories && stories.length > 0 ? (
+        <HomepageStories stories={stories} />
+      ) : (
+        <p>Loading stories...</p>
+      )}
     </div>
   );
 };

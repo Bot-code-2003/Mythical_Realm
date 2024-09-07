@@ -29,3 +29,8 @@ export const getStories = (genre) =>
 export const getStory = (id) => API.get(`/story/getStory/${id}`);
 
 export const handleDeleteStory = (id) => API.delete(`/story/delete/${id}`);
+
+export const handleCheckboxChangeStory = (id, status) =>
+  API.patch(`/story/${id}`, { status });
+
+export const getHomepageStories = () => API.get("/story/getHomepageStories");

@@ -4,6 +4,8 @@ import {
   getStories,
   getStory,
   handleDelete,
+  handleCheckboxChangeStory,
+  getHomepageStories,
 } from "../controllers/story.js";
 
 const router = express.Router();
@@ -17,10 +19,14 @@ router.get("/getStories", getStories);
 // Route to get a single story
 router.get("/getStory/:id", getStory);
 
+router.get("/getHomepageStories", getHomepageStories);
+
+router.patch("/:id", handleCheckboxChangeStory);
+
 //////////////////////////////////////
 // These are currently not in use.////
 //////////////////////////////////////
 
-export default router;
-
 router.delete("/delete/:id", handleDelete);
+
+export default router;
