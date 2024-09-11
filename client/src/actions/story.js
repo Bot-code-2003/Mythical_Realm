@@ -74,14 +74,32 @@ export const handleCheckboxChangeStory = (data) => async (dispatch) => {
   }
 };
 
-export const getHomepageStories = () => async (dispatch) => {
+//To update top picks
+export const updateTopPicks = (topPicks) => async (dispatch) => {
   try {
-    console.log("getHomepageStories called");
-
-    const { data } = await api.getHomepageStories();
-    console.log("Home page Stories fetched");
-    return data;
+    // Call the API to update top picks
+    const { data } = await api.updateTopPicks(topPicks);
+    console.log("Top picks updated successfully:", data);
   } catch (error) {
-    console.error("An unexpected error occurred:", error);
+    console.error(
+      "An unexpected error occurred while updating top picks:",
+      error
+    );
+  }
+};
+
+export const getTopPicks = () => async (dispatch) => {
+  try {
+    const { data } = await api.getTopPicks();
+    const action = {
+      type: "GET_TOP_PICKS",
+      payload: data,
+    };
+    dispatch(action);
+  } catch (error) {
+    console.error(
+      "An unexpected error occurred while fetching top picks:",
+      error
+    );
   }
 };

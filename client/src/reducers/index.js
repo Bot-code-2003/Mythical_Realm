@@ -1,14 +1,8 @@
-import HomePage from "../pages/home/HomePage";
-
 const initialState = {
   articles: [], // all the articles
-  // singleArticle: [], // single article
   stories: [], // all the stories
-  // singleStory: null, // single story
-  story: null,
-
-  // Add chapter state as of now not in use.
-  // chapter: null, // Add chapter state
+  story: null, // single story
+  topPicks: [], // top-picked stories
 };
 
 export default (state = initialState, action) => {
@@ -33,7 +27,13 @@ export default (state = initialState, action) => {
     case "GET_STORY":
       return {
         ...state,
-        story: action.payload, // Handle story payload
+        story: action.payload, // Handle single story payload
+      };
+
+    case "GET_TOP_PICKS":
+      return {
+        ...state,
+        topPicks: action.payload.length > 0 ? action.payload : [], // Handle top picks payload
       };
 
     default:

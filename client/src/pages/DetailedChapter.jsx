@@ -105,8 +105,16 @@ const DetailedChapter = () => {
       </div>
 
       {currentChapter && (
-        <div className="flex flex-col font-roboto items-center gap-10 md:flex-row mb-8">
-          <div className="md:w-1/2 text-center md:pr-8 mb-8 md:mb-0">
+        <div
+          className={`flex flex-col font-roboto items-center gap-10 ${
+            currentChapter.chapterImage ? "md:flex-row" : ""
+          } mb-8`}
+        >
+          <div
+            className={`text-center mb-8 md:mb-0 ${
+              currentChapter.chapterImage ? "md:w-1/2 md:pr-8" : "w-full"
+            }`}
+          >
             <p className="text-sm text-red-500 mb-4">{story.storyName}</p>
             <h1 className="text-5xl mb-4">{currentChapter.chapterName}</h1>
             <p className="text-xl text-gray-500 font-kalam leading-relaxed mb-4">
@@ -125,6 +133,7 @@ const DetailedChapter = () => {
           )}
         </div>
       )}
+
       {currentChapter && (
         <div className="border-t border-gray-300 pt-6 p-4 sm:px-10">
           <div

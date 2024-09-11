@@ -61,10 +61,13 @@ const StoryList = ({ genre }) => {
           </div>
         </div>
       ) : (
-        <div className="story-list container mx-auto p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {stories.map((story) => (
-            <Story key={story._id} story={story} />
-          ))}
+        <div className="container mx-auto p-4">
+          {/* Grid for stories - Responsive layout */}
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+            {stories.map((story) => (
+              <Story key={story._id} story={story} />
+            ))}
+          </div>
         </div>
       )}
     </>

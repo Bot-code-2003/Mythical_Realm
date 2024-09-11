@@ -6,6 +6,8 @@ import {
   handleDelete,
   handleCheckboxChangeStory,
   getHomepageStories,
+  updateTopPicks,
+  getTopPicks,
 } from "../controllers/story.js";
 
 const router = express.Router();
@@ -22,6 +24,10 @@ router.get("/getStory/:id", getStory);
 router.get("/getHomepageStories", getHomepageStories);
 
 router.patch("/:id", handleCheckboxChangeStory);
+
+router.post("/top-picks", updateTopPicks);
+
+router.get("/top-picks", getTopPicks);
 
 //////////////////////////////////////
 // These are currently not in use.////

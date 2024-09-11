@@ -52,7 +52,7 @@ const StorySchema = new Schema(
       required: true,
       trim: true,
     },
-    homePage: {
+    isTopPick: {
       type: Boolean,
       default: false,
     },

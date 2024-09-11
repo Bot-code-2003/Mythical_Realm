@@ -2,7 +2,6 @@ import Story from "../models/story.js";
 
 // Controller to handle story submission
 export const handleStory = async (req, res) => {
-  console.log("handleStory controller called");
   const {
     storyName,
     storyImage,
@@ -55,16 +54,10 @@ export const handleStory = async (req, res) => {
 
 export const getStories = async (req, res) => {
   const { genre } = req.query;
-  // console.log("getStories controller called with genre:", genre);
 
   try {
     if (genre === "All") {
       const stories = await Story.find();
-      // console.log("Stories:", stories);
-      for (let i = 0; i < stories.length; i++) {
-        console.log("Story:", stories[i].storyCategory);
-      }
-
       res.status(200).json(stories);
     } else {
       const stories = await Story.find({ storyCategory: genre });
@@ -107,14 +100,6 @@ export const getStory = async (req, res) => {
 export const handleCheckboxChangeStory = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
-
-  console.log(
-    "handleCheckboxChangeStory controller called with id:",
-    id,
-    "status:",
-    status
-  );
-
   try {
     // Find the story by its ID
     let story = await Story.findById(id);
@@ -151,5 +136,37 @@ export const getHomepageStories = async (req, res) => {
   } catch (error) {
     console.error("Error fetching homepage stories:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Controller to update top picks
+export const updateTopPicks = async (req, res) => {
+  try {
+    const { topPicks } = req.body;
+
+    // Set isTopPick to false for all stories
+    await Story.updateMany({}, { isTopPick: false });
+
+    // Set isTopPick to true for the selected top picks
+    await Story.updateMany({ _id: { $in: topPicks } }, { isTopPick: true });
+
+    // Return updated stories
+    const updatedStories = await Story.find({ _id: { $in: topPicks } });
+
+    res.status(200).json(updatedStories);
+  } catch (error) {
+    console.error("Error updating top picks:", error);
+    res.status(500).json({ message: "Failed to update top picks" });
+  }
+};
+
+export const getTopPicks = async (req, res) => {
+  try {
+    // Fetch all stories where isTopPick is true
+    const topPicks = await Story.find({ isTopPick: true });
+    res.status(200).json(topPicks);
+  } catch (error) {
+    console.error("Error fetching top picks:", error);
+    res.status(500).json({ message: "Failed to fetch top picks" });
   }
 };

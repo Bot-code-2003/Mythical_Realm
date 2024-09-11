@@ -34,3 +34,8 @@ export const handleCheckboxChangeStory = (id, status) =>
   API.patch(`/story/${id}`, { status });
 
 export const getHomepageStories = () => API.get("/story/getHomepageStories");
+
+export const updateTopPicks = (topPicks) =>
+  API.post("/story/top-picks", { topPicks });
+
+export const getTopPicks = () => API.get("/story/top-picks");

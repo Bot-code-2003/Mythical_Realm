@@ -33,7 +33,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex flex-col items-center px-16 sm:px-32 py-10">
+    <div className="flex flex-col items-center gap-5 px-16 sm:px-32 py-10">
       <div className="navBar text-center mb-2">
         <p
           onClick={() => navigate("/")}
@@ -76,6 +76,12 @@ const Auth = () => {
             Sign in
           </button>
         </form>
+
+        {/* Note about account creation */}
+        <p className="text-gray-500 text-sm text-center mt-2">
+          Don’t have an account? No problem! Your account will be created
+          automatically when you sign in.
+        </p>
       </div>
 
       {/* Google login button (UNDER DEVELOPMENT) */}

@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
 import LockIcon from "@mui/icons-material/Lock";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HomePageNav from "./HomePageNav";
 import HomepageStories from "./HomepageStories";
-
-import { getHomepageStories } from "../../actions/story";
+import { getTopPicks } from "../../actions/story";
+import { CircularProgress } from "@mui/material";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const [stories, setStories] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Use useSelector to get top picks from the Redux store
+  const topPicks = useSelector((state) => state.topPicks);
 
   useEffect(() => {
     document.title = "The Mythical Realm";
@@ -83,13 +85,16 @@ const HomePage = () => {
     return () => clearInterval(interval); // Clear interval on component unmount to avoid memory leaks.
   }, []);
 
-  // Fetch homepage stories
   useEffect(() => {
-    dispatch(getHomepageStories()).then((response) => {
-      if (response && response.length > 0) {
-        setStories(response);
+    const fetchTopPicks = async () => {
+      try {
+        await dispatch(getTopPicks()); // Fetch top picks
+      } catch (error) {
+        console.error("Error fetching top picks:", error);
       }
-    });
+    };
+
+    fetchTopPicks();
   }, [dispatch]);
 
   const handleNext = () => {
@@ -161,11 +166,20 @@ const HomePage = () => {
       </div>
 
       <HomePageNav />
-      {stories && stories.length > 0 ? (
-        <HomepageStories stories={stories} />
-      ) : (
-        <p>Loading stories...</p>
-      )}
+
+      {/* Display Top Picks Section */}
+      <div className="mt-8">
+        <h2 className="text-3xl mb-4 text-center underline font-crimson">
+          Top Picks
+        </h2>
+        {topPicks && topPicks.length > 0 ? (
+          <HomepageStories stories={topPicks} />
+        ) : (
+          <div className="flex justify-center items-center h-96">
+            <CircularProgress />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
