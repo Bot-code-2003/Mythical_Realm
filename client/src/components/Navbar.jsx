@@ -4,6 +4,18 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Import jwtDecode correctly
 
+import LogoutIcon from "@mui/icons-material/Logout";
+import Face2Icon from "@mui/icons-material/Face2";
+
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import BookIcon from "@mui/icons-material/Book";
+import HailIcon from "@mui/icons-material/Hail";
+import PublishIcon from "@mui/icons-material/Publish";
+import DrawIcon from "@mui/icons-material/Draw";
+// import LogoutIcon from "@mui/icons-material/Logout";
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -52,11 +64,28 @@ const Navbar = () => {
 
   // Array of menu items
   const menuItems = [
-    { name: "The Latest", path: "/latest" },
-    { name: "Stories", path: "/stories" },
-    { name: "Blogs", path: "/blogs" },
-    { name: "Poetry", path: "/poetry" },
-    { name: "Top Picks", path: "/top-picks" },
+    {
+      name: "Stories",
+      path: "/allStories",
+      icon: <AutoStoriesIcon fontSize="small" />,
+    },
+    // {
+    //   name: "Latest Stories",
+    //   path: "/latest-stories",
+    //   icon: <ScheduleIcon fontSize="small" />,
+    // },
+    // {
+    //   name: "Our Top-picks",
+    //   path: "/top-picks",
+    //   icon: <HailIcon fontSize="small" />,
+    // },
+    // {
+    //   name: "Trending",
+    //   path: "/trending",
+    //   icon: <WhatshotIcon fontSize="small" />,
+    // },
+    { name: "Blogs", path: "/allBlogs", icon: <BookIcon fontSize="small" /> },
+    // { name: "Poetry", path: "/poetry" },
   ];
 
   const toggleMenu = () => {
@@ -153,41 +182,40 @@ const Navbar = () => {
                     className="absolute top-6 -right-3 p-1 shadow-md rounded-sm z-10 bg-white"
                   >
                     <p
-                      className="hover:bg-gray-300 text-left cursor-pointer p-2"
+                      className="hover:bg-gray-300 text-left cursor-pointer py-3 px-6 flex justify-between items-center gap-3"
                       onClick={handleLogout}
                     >
                       Logout
-                    </p>
-                    <p className="hover:bg-gray-300 text-left cursor-pointer p-2">
-                      Appearance
+                      <LogoutIcon fontSize="small" />
                     </p>
                     <p
                       onClick={() => navigate("/profile")}
-                      className="hover:bg-gray-300 text-left cursor-pointer p-2"
+                      className="hover:bg-gray-300 text-left cursor-pointer py-3 px-6 flex justify-between items-center gap-3"
                     >
                       Profile
+                      <Face2Icon fontSize="small" />
                     </p>
-                    <p className=" hover:bg-gray-300 text-left cursor-pointer p-2">
-                      {user.email}
-                    </p>
-                    <p
-                      onClick={() => navigate("/upload")}
-                      className="hover:bg-gray-300 text-left cursor-pointer p-2"
-                    >
-                      {Admin && "Upload"}
-                    </p>
+                    {Admin && (
+                      <p
+                        onClick={() => navigate("/upload")}
+                        className="hover:bg-gray-300 text-left cursor-pointer py-3 px-6"
+                      >
+                        "Upload"
+                      </p>
+                    )}
+
                     {Admin &&
                       ((
                         <p
                           onClick={() => navigate("/saved")}
-                          className="hover:bg-gray-300 text-left cursor-pointer p-2"
+                          className="hover:bg-gray-300 text-left cursor-pointer py-3 px-6"
                         >
                           Saved
                         </p>
                       ),
                       (
                         <p
-                          className="hover:bg-gray-300 text-left cursor-pointer p-2"
+                          className="hover:bg-gray-300 text-left cursor-pointer py-3 px-6"
                           onClick={() => navigate("/admin")}
                         >
                           Admin Panel
@@ -205,22 +233,50 @@ const Navbar = () => {
       {menuOpen && (
         <div
           ref={menuRef}
-          className="width-[100%] text-sm font-semibold text-gray-800 sm:hidden flex flex-col items-center p-3 border-gray-300 border-b-[1px] mb-3"
+          className="text-sm font-semibold text-gray-800 sm:hidden flex flex-col items-center gap-2 p-3 border-gray-300 border-b-[1px] mb-3"
         >
+          {!user ? (
+            <p
+              onClick={() => (navigate("/auth"), setMenuOpen(false))}
+              className="bg-green-600 text-white p-2 rounded-sm hover:underline cursor-pointer min-w-[150px] flex items-center gap-3"
+            >
+              <Face2Icon fontSize="small" /> Sign in
+            </p>
+          ) : (
+            <>
+              <p
+                onClick={() => (navigate("/profile"), setMenuOpen(false))}
+                className="bg-green-600 text-white p-2 rounded-sm hover:underline cursor-pointer min-w-[150px] flex items-center gap-3"
+              >
+                <Face2Icon fontSize="small" /> Profile
+              </p>
+              <p
+                onClick={() => (handleLogout(), setMenuOpen(false))}
+                className="bg-red-600 text-white p-2 rounded-sm hover:underline cursor-pointer min-w-[150px] flex items-center gap-3"
+              >
+                <LogoutIcon fontSize="small" /> Logout
+              </p>
+            </>
+          )}
+          <p
+            onClick={() => (navigate("/publish"), setMenuOpen(false))}
+            className=" bg-gray-300 p-2 rounded-sm hover:underline cursor-pointer min-w-[150px] flex items-center gap-3"
+          >
+            <DrawIcon fontSize="small" /> Publish
+          </p>
           {menuItems.map((item, index) => (
             <p
               key={index}
-              className="hover:underline cursor-pointer"
+              className="hover:underline cursor-pointer p-2 min-w-[150px] flex items-center gap-3"
               onClick={() => {
                 navigate(item.path);
                 setMenuOpen(false); // Close menu on item click
               }}
             >
+              {item.icon}
               {item.name}
             </p>
           ))}
-          <p>Publish</p>
-          {!user ? <p>Sign in</p> : <p>Account</p>}
         </div>
       )}
     </div>

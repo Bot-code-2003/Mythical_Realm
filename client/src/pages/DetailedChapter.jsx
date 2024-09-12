@@ -1,48 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Lottie from "lottie-react";
 import emptyAnimation from "../Lottie/search.json";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getStory } from "../actions/story";
+import { CircularProgress } from "@mui/material";
 
 const DetailedChapter = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
+
   const storyId = queryParams.get("storyId");
+  const chapterId = queryParams.get("chapterId");
 
   const story = useSelector(
     (state) => state.stories.find((s) => s._id === storyId) || state.story // Either find it in stories or use the fetched single story
   );
 
   // State to track the current chapter index
-  const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(null);
 
+  // Fetch story when it is not found in Redux
   useEffect(() => {
-    if (story) {
-      window.scrollTo(0, 0); // Scroll to top after loading
-      setCurrentChapterIndex(0); // Reset to the first chapter when story changes
+    if (!story) {
+      dispatch(getStory(storyId));
     }
-  }, [story]);
+  }, [dispatch, storyId, story]);
 
+  // Update currentChapterIndex based on chapterId from URL
   useEffect(() => {
-    if (story) {
-      window.scrollTo(0, 0); // Scroll to top after loading
-      // setCurrentChapterIndex(0); // Reset to the first chapter when story changes
+    if (story && chapterId && currentChapterIndex === null) {
+      const chapterIndex = story.chapters.findIndex(
+        (chapter) => chapter._id === chapterId
+      );
+      if (chapterIndex !== -1) {
+        setCurrentChapterIndex(chapterIndex);
+      } else {
+        setCurrentChapterIndex(0); // Set to first chapter if not found
+      }
+    }
+  }, [story, chapterId, currentChapterIndex]);
+
+  // Scroll to the top when the current chapter changes
+  useEffect(() => {
+    if (currentChapterIndex !== null) {
+      window.scrollTo(0, 0); // Scroll to the top of the page
     }
   }, [currentChapterIndex]);
 
-  const currentChapter = story?.chapters?.[currentChapterIndex];
-
+  // Update URL based on currentChapterIndex change
   useEffect(() => {
-    if (currentChapter) {
+    if (story && currentChapterIndex !== null) {
+      const currentChapter = story.chapters[currentChapterIndex];
       const newUrl = `/story/${slugify(story.storyCategory)}/${slugify(
         story.storyName
       )}/chapter/${slugify(
         currentChapter.chapterName
       )}?storyId=${storyId}&chapterId=${currentChapter._id}`;
-      navigate(newUrl, { replace: true }); // Update the URL without reloading the page
+      navigate(newUrl, { replace: true });
     }
-  }, [currentChapter, navigate, story, storyId]);
+  }, [currentChapterIndex, story, navigate, storyId]);
+
+  const currentChapter = story?.chapters?.[currentChapterIndex];
 
   const formattedDate = currentChapter
     ? new Date(currentChapter.createdAt).toLocaleDateString("en-US", {
@@ -52,15 +73,16 @@ const DetailedChapter = () => {
       })
     : "";
 
-  if (!story || !currentChapter) {
+  if (!story || currentChapterIndex === null) {
     return (
-      <div className="flex flex-col justify-center items-center">
-        <Lottie
+      <div className="flex flex-col justify-center min-h-[50vh] items-center">
+        {/* <Lottie
           animationData={emptyAnimation}
           loop={true}
           style={{ width: "50%" }}
         />
-        <p className="text-xl font-bold text-gray-700">No chapter available</p>
+        <p className="text-xl font-bold text-gray-700">No chapter available</p> */}
+        <CircularProgress />
       </div>
     );
   }

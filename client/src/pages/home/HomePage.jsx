@@ -25,8 +25,8 @@ const HomePage = () => {
       className: "homePage_1",
       heading: "Welcome to Mythical Realm",
       description: "Where Ancient Legends and Timeless Mysteries Unfold.",
-      button: "Explore",
-      linkTo: "/explore",
+      // button: "Explore",
+      // linkTo: "/explore",
     },
     {
       id: 2,
@@ -130,10 +130,12 @@ const HomePage = () => {
               {obj.description}
             </p>
             <Link id={obj.id} to={obj.linkTo}>
-              <button className="rounded-full transition-colors duration-300 bg-white px-8 py-2 mt-4 hover:bg-gray-300 flex justify-center items-center">
-                {obj.button}
-                {obj.icon === "LockIcon" && <LockIcon fontSize="small" />}
-              </button>
+              {obj.button && (
+                <button className="rounded-full transition-colors duration-300 bg-white px-8 py-2 mt-4 hover:bg-gray-300 flex justify-center items-center">
+                  {obj.button}
+                  {obj.icon === "LockIcon" && <LockIcon fontSize="small" />}
+                </button>
+              )}
             </Link>
           </div>
         ))}

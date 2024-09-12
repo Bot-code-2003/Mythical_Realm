@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getStory } from "../actions/story"; // Ensure you import your action
@@ -9,11 +9,12 @@ const DetailedStory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const story = useSelector(
-    (state) => state.stories.find((s) => s._id === storyId) || state.story // Either find it in stories or use the fetched single story
+  // Use story from the Redux store
+  const story = useSelector((state) =>
+    state.story && state.story._id === storyId ? state.story : null
   );
 
-  const [loading, setLoading] = useState(!story);
+  const loading = useSelector((state) => state.loading); // Assuming you have a loading state in your redux store
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -24,14 +25,11 @@ const DetailedStory = () => {
       window.scrollTo(0, 0);
     }, 100);
 
-    if (!story) {
-      dispatch(getStory(storyId)).then(() => {
-        setLoading(false);
-      });
-    } else {
-      setLoading(false);
+    // Fetch the story if not found or if the storyId changes
+    if (!story || story._id !== storyId) {
+      dispatch(getStory(storyId));
     }
-  }, [dispatch, story, storyId]);
+  }, [dispatch, storyId, story]);
 
   const slug = (name) => {
     return name
@@ -68,7 +66,11 @@ const DetailedStory = () => {
   }
 
   if (!story) {
-    return <div>Story not found.</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (story.chapters.length === 0) {
@@ -104,18 +106,14 @@ const DetailedStory = () => {
       <h2 className="text-3xl font-bold mb-4">Chapters</h2>
       <div className="chapter-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {story.chapters.map((chapter) => (
-          <div
+          <Link
             key={chapter._id}
             className="chapter-card cursor-pointer"
-            onClick={() =>
-              handleChapterClick(
-                story._id,
-                story.storyCategory,
-                story.storyName,
-                chapter.chapterName,
-                chapter._id
-              )
-            }
+            to={`/story/${slug(story.storyCategory)}/${slug(
+              story.storyName
+            )}/chapter/${slug(chapter.chapterName)}?storyId=${
+              story._id
+            }&chapterId=${chapter._id}`}
           >
             {chapter.chapterImage && (
               <img
@@ -128,7 +126,7 @@ const DetailedStory = () => {
               {chapter.chapterName}
             </h3>
             <p className="chapter-desc text-md">{chapter.chapterDesc}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
