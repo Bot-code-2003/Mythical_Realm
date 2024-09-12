@@ -3,18 +3,21 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getStory } from "../actions/story"; // Ensure you import your action
+import { useLocation } from "react-router-dom";
 
 const DetailedStory = () => {
-  const { storyId } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const queryParams = new URLSearchParams(location.search);
+  const storyId = queryParams.get("storyId");
+  // console.log(" storyId", storyId);
 
   // Use story from the Redux store
   const story = useSelector((state) =>
     state.story && state.story._id === storyId ? state.story : null
   );
-
-  const loading = useSelector((state) => state.loading); // Assuming you have a loading state in your redux store
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -57,13 +60,13 @@ const DetailedStory = () => {
     );
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <CircularProgress color="primary" />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <CircularProgress color="primary" />
+  //     </div>
+  //   );
+  // }
 
   if (!story) {
     return (

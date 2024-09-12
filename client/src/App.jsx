@@ -160,7 +160,7 @@ const App = () => {
           }
         />
         <Route
-          path="/story/:storyCategory/:storyName/:storyId"
+          path="/story/:storyCategory/:storyName"
           element={
             <>
               <Navbar />

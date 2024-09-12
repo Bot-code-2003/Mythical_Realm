@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Corrected import
 import { handleDeleteStory } from "../actions/story";
 import { useDispatch } from "react-redux";
@@ -32,13 +32,6 @@ const Story = ({ story }) => {
       .replace(/-+$/, "");
   };
 
-  const handleStoryClick = () => {
-    const storyCategory = slug(story.storyCategory);
-    const storyName = slug(story.storyName);
-    const storyId = story._id;
-    navigate(`/story/${storyCategory}/${storyName}/${storyId}`);
-  };
-
   const handleDelete = async (id) => {
     try {
       if (window.confirm("Are you sure you want to delete this story?")) {
@@ -52,9 +45,12 @@ const Story = ({ story }) => {
   return (
     <div className="flex flex-col p-4">
       {/* Mobile View - flex-row for details and image side by side */}
-      <div
-        className="story-card hover:cursor-pointer flex flex-row sm:hidden"
-        onClick={handleStoryClick}
+      <Link
+        key={`${story._id}-mobile`} // Unique key for mobile
+        className="chapter-card cursor-pointer flex flex-row sm:hidden"
+        to={`/story/${slug(story.storyCategory)}/${slug(
+          story.storyName
+        )}?storyId=${story._id}`}
       >
         {/* Story Details - Left Side in Mobile */}
         <div className="w-3/4 flex flex-col justify-between pr-4">
@@ -84,12 +80,15 @@ const Story = ({ story }) => {
             className="object-cover w-full h-full rounded-sm"
           />
         </div>
-      </div>
+      </Link>
 
       {/* Desktop View - flex-col for details and image stacked */}
-      <div
-        className="story-card hover:cursor-pointer hidden sm:flex flex-col"
-        onClick={handleStoryClick}
+      <Link
+        key={`${story._id}-desktop`} // Unique key for desktop
+        className="chapter-card cursor-pointer hidden sm:flex sm:flex-col"
+        to={`/story/${slug(story.storyCategory)}/${slug(
+          story.storyName
+        )}?storyId=${story._id}`}
       >
         <img
           src={story.storyImage}
@@ -117,7 +116,7 @@ const Story = ({ story }) => {
             By {story.storyAuthor ? story.storyAuthor : "Anonymous"}
           </p>
         </div>
-      </div>
+      </Link>
 
       {Admin && (
         <div className="mt-2">

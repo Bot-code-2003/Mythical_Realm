@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArticle, handleDelete } from "../actions/article";
-import testPic from "../assets/blog.webp";
 import { useNavigate, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Lottie from "lottie-react";
 import emptyAnimation from "../Lottie/search.json";
 import { jwtDecode } from "jwt-decode"; // Corrected import statement
-import StoryList from "./StoryList";
 
 const Blogs = ({ genre }) => {
   const location = useLocation();

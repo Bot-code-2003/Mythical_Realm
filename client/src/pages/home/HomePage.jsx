@@ -10,23 +10,23 @@ import { CircularProgress } from "@mui/material";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0); // For controlling the HeroSection carousel
 
-  // Use useSelector to get top picks from the Redux store
+  // Use useSelector to get the top picks from the Redux store
   const topPicks = useSelector((state) => state.topPicks);
 
+  // Set the document title when the component mounts
   useEffect(() => {
     document.title = "The Mythical Realm";
   }, []);
 
+  // HeroSection array containing data for each section of the carousel
   const HeroSection = [
     {
       id: 1,
       className: "homePage_1",
       heading: "Welcome to Mythical Realm",
       description: "Where Ancient Legends and Timeless Mysteries Unfold.",
-      // button: "Explore",
-      // linkTo: "/explore",
     },
     {
       id: 2,
@@ -75,6 +75,7 @@ const HomePage = () => {
     },
   ];
 
+  // Carousel auto-scroll logic
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
@@ -82,13 +83,14 @@ const HomePage = () => {
       );
     }, 5000); // Change every 5 seconds
 
-    return () => clearInterval(interval); // Clear interval on component unmount to avoid memory leaks.
+    return () => clearInterval(interval); // Clear interval to prevent memory leaks
   }, []);
 
+  // Fetch top picks from the server when the component mounts
   useEffect(() => {
     const fetchTopPicks = async () => {
       try {
-        await dispatch(getTopPicks()); // Fetch top picks
+        await dispatch(getTopPicks()); // Fetch the top picks from the Redux action
       } catch (error) {
         console.error("Error fetching top picks:", error);
       }
@@ -97,12 +99,14 @@ const HomePage = () => {
     fetchTopPicks();
   }, [dispatch]);
 
+  // Manually navigate to the next item in the carousel
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === HeroSection.length - 1 ? 0 : prevIndex + 1
     );
   };
 
+  // Manually navigate to the previous item in the carousel
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? HeroSection.length - 1 : prevIndex - 1
@@ -111,6 +115,7 @@ const HomePage = () => {
 
   return (
     <div className="p-2">
+      {/* Hero Section Carousel */}
       <div className="relative w-full h-[600px] sm:h-[500px] flex justify-center items-center overflow-hidden">
         {HeroSection.map((obj, index) => (
           <div
@@ -167,18 +172,20 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* HomePage Navigation */}
       <HomePageNav />
 
-      {/* Display Top Picks Section */}
+      {/* Top Picks Section */}
       <div className="mt-8">
         <h2 className="text-3xl mb-4 text-center underline font-crimson">
           Top Picks
         </h2>
         {topPicks && topPicks.length > 0 ? (
-          <HomepageStories stories={topPicks} />
+          <HomepageStories stories={topPicks} /> // Display top picks if available
         ) : (
           <div className="flex justify-center items-center h-96">
-            <CircularProgress />
+            <CircularProgress />{" "}
+            {/* Show loading spinner if top picks are still loading */}
           </div>
         )}
       </div>

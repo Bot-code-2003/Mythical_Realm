@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import thinking from "../assets/thinking.jpg";
-
 const categories = {
   genre: [
     "Cult",
