@@ -13,8 +13,8 @@ const Footer = () => {
         </p>
       </div>
       <div className="text-center gap-2 flex flex-col items-center justify-center mt-5 mb-5">
-        <p>© 2023 Mythical Realm. All rights reserved.</p>
-        <p>Dharmadeep Madisetty</p>
+        <p className="text-sm">© 2024 Mythical Realm. All rights reserved.</p>
+        <p className="text-sm">Dharmadeep Madisetty</p>
         <img
           src="/Favicon.jpg"
           width={100}
