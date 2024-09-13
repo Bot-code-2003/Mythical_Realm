@@ -112,7 +112,7 @@ const HomePage = () => {
   return (
     <div className="p-2">
       {/* Hero Section Carousel */}
-      <div className="relative w-full h-[600px] sm:h-[500px] flex justify-center items-center overflow-hidden">
+      <div className="relative w-full h-[50vh] sm:h-[500px] flex justify-center items-center overflow-hidden">
         {HeroSection.map((obj, index) => (
           <div
             key={obj.id}
