@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import auth from "../../assets/auth1.webp";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
@@ -31,6 +31,10 @@ const Auth = () => {
 
     console.log("submitted");
   };
+
+  useEffect(() => {
+    document.title = `Authentication | Mythical Realm`;
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-5 px-16 sm:px-32 py-10">

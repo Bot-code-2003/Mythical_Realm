@@ -45,7 +45,7 @@ const Blogs = ({ genre }) => {
   console.log("articles", articles);
 
   useEffect(() => {
-    document.title = `Mythical Realm | ${genre}`;
+    document.title = `Mythical Realm | ${genre} Articles`;
     const fetchData = async () => {
       try {
         await dispatch(getArticle(genre)); // Dispatch action to get articles "All, dont get confused by name getArticle, its plural" on mount

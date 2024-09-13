@@ -12,6 +12,7 @@ const StoryList = ({ genre }) => {
   const stories = useSelector((state) => state.stories);
 
   useEffect(() => {
+    document.title = `Mythical Realm | ${genre} Stories`;
     // Disable browser's automatic scroll restoration
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";

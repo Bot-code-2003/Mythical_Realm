@@ -14,11 +14,11 @@ app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 // Configure CORS
-const corsOptions = {
-  origin: process.env.CLIENT_URL || "*", // Replace with your client's URL
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: process.env.CLIENT_URL || "*", // Replace with your client's URL
+//   optionsSuccessStatus: 200,
+// };
+app.use(cors());
 
 // Routes
 app.use("/user", userRoutes);

@@ -78,7 +78,7 @@ const App = () => {
           element={
             <>
               <Navbar />
-              <Section genre="Dark Fantasy" />
+              <Section genre="Dark Tales" />
 
               <Footer />
             </>

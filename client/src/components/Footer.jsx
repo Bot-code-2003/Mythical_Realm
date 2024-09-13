@@ -12,9 +12,16 @@ const Footer = () => {
           <span className="text-2xl">MYTHICAL REALM</span>
         </p>
       </div>
-      <div className="text-center mt-5 mb-5">
+      <div className="text-center gap-2 flex flex-col items-center justify-center mt-5 mb-5">
         <p>© 2023 Mythical Realm. All rights reserved.</p>
         <p>Dharmadeep Madisetty</p>
+        <img
+          src="/Favicon.jpg"
+          width={100}
+          height={100}
+          className="rounded-md"
+          alt="The all seeing eye pixel art"
+        />
       </div>
     </div>
   );
