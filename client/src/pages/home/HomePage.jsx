@@ -26,14 +26,13 @@ const HomePage = () => {
       id: 1,
       className: "homePage_1",
       heading: "Welcome to Mythical Realm",
-      description: "Where Ancient Legends and Timeless Mysteries Unfold.",
+      description: "Explore timeless legends and ancient mysteries.",
     },
     {
       id: 2,
       className: "homePage_2",
       heading: "Enter the World of Fantasy",
-      description:
-        "Dive into epic tales, mythical creatures, and enchanted worlds that spark the imagination and blur the lines between reality and magic.",
+      description: "Discover epic stories filled with magic and wonder.",
       button: "Discover Fantasy",
       linkTo: "/fantasy",
     },
@@ -41,8 +40,7 @@ const HomePage = () => {
       id: 3,
       className: "homePage_5",
       heading: "Venture Into the Unknown",
-      description:
-        "Explore mind-bending tales of space, unravel time paradoxes, and face the terrors that lurk in the cosmic void.",
+      description: "Explore space tales and cosmic mysteries.",
       button: "Cosmic Mysteries",
       linkTo: "/space",
     },
@@ -50,8 +48,7 @@ const HomePage = () => {
       id: 4,
       className: "homePage_6",
       heading: "Whispers from the Shadows",
-      description:
-        "Venture into tales of forbidden magic, sinister rituals, and the haunting echoes of the paranormal. Discover stories where shadows hold secrets and the line between reality and the supernatural blurs.",
+      description: "Unveil dark stories and supernatural secrets.",
       button: "Dark Tales",
       linkTo: "/dark-tales",
     },
@@ -59,8 +56,7 @@ const HomePage = () => {
       id: 5,
       className: "homePage_3",
       heading: "Discover Hidden Lore",
-      description:
-        "Unlock secret stories, hidden chapters, and exclusive content that delve deeper into the myths and mysteries of our universe.",
+      description: "Unlock hidden stories and exclusive content.",
       button: "Unlock Lore",
       linkTo: "/hidden-lore",
       icon: "LockIcon",
@@ -69,7 +65,7 @@ const HomePage = () => {
       id: 6,
       className: "homePage_4",
       heading: "Mythics Untold",
-      description: "Share your own myths and legends with the world.",
+      description: "Share your own myths and stories.",
       button: "Publish",
       linkTo: "/publish",
     },
@@ -81,7 +77,7 @@ const HomePage = () => {
       setCurrentIndex((prevIndex) =>
         prevIndex === HeroSection.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000); // Change every 5 seconds
+    }, 10000); // Change every 5 seconds
 
     return () => clearInterval(interval); // Clear interval to prevent memory leaks
   }, []);
@@ -128,10 +124,10 @@ const HomePage = () => {
                 : "opacity-0 pointer-events-none"
             } flex flex-col justify-center items-center `}
           >
-            <h1 className="text-[45px] leading-tight sm:text-[55px] text-center text-white drop-shadow-2xl text-shadow-lg">
+            <h1 className="text-[35px] leading-tight sm:text-[55px] text-center text-white drop-shadow-2xl text-shadow-lg">
               {obj.heading}
             </h1>
-            <p className="text-[25px] text-white text-center drop-shadow-md text-shadow-lg">
+            <p className="text-[20px] text-white text-center drop-shadow-md text-shadow-lg">
               {obj.description}
             </p>
             <Link id={obj.id} to={obj.linkTo}>
@@ -177,7 +173,7 @@ const HomePage = () => {
 
       {/* Top Picks Section */}
       <div className="mt-8">
-        <h2 className="text-3xl mb-4 text-center underline font-crimson">
+        <h2 className="text-3xl sm:mb-4 text-center underline font-crimson">
           Top Picks
         </h2>
         {topPicks && topPicks.length > 0 ? (

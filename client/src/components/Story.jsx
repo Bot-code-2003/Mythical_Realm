@@ -53,31 +53,31 @@ const Story = ({ story }) => {
         )}?storyId=${story._id}`}
       >
         {/* Story Details - Left Side in Mobile */}
-        <div className="w-3/4 flex flex-col justify-between pr-4">
-          <p className="text-red-500 font-patrick text-lg">
+        <div className="w-2/3 flex flex-col justify-center gap-1 pr-4">
+          <p className="text-red-500 font-patrick text-sm">
             {story.storyCategory}
           </p>
-          <h2 className="text-xl mb-1 hover:underline">{story.storyName}</h2>
+          <h2 className="text-lg mb-1 hover:underline">{story.storyName}</h2>
           <p className="text-gray-700 text-sm mb-2 ">
-            {story.storyDescription.length > 100 ? (
+            {story.storyDescription.length > 90 ? (
               <>
-                {story.storyDescription.slice(0, 100)}
+                {story.storyDescription.slice(0, 90)}
                 <span className="text-blue-500">... Read more</span>
               </>
             ) : (
               story.storyDescription
             )}
           </p>
-          <p className="font-inter font-semibold text-gray-900 text-sm">
+          <p className="font-inter font-semibold text-gray-900 text-xs">
             By {story.storyAuthor ? story.storyAuthor : "Anonymous"}
           </p>
         </div>
         {/* Image - Right Side in Mobile */}
-        <div className="w-1/4">
+        <div className="w-1/3 flex justify-center items-center">
           <img
             src={story.storyImage}
             alt={story.storyName}
-            className="object-cover w-full h-full rounded-sm"
+            className="object-cover w-[100%] h-[90%] rounded-sm"
           />
         </div>
       </Link>
