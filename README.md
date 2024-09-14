@@ -27,7 +27,7 @@ MythicRealm is designed to be a community-driven platform where users can submit
 
 ## Technologies Used
 
-- **Frontend**: React.js, Vite, Tailwind CSS for styling, MUI Icons.
+- **Frontend**: React.js, Redux, Tailwind CSS for styling, MUI Icons.
 - **Backend**: Node.js, Express.js, MongoDB, Mongoose.
 
 ## Installation
@@ -45,7 +45,7 @@ To run MythicRealm locally, follow these steps:
 
 ## Contribution Guidelines
 
-We welcome contributions from the community! Whether you're interested in adding new features, fixing bugs, or improving the documentation, your help is appreciated. Please fork the repository, create a new branch, and submit a pull request with your changes.
+We welcome contributions from the community! Whether you're interested in adding new features, fixing bugs, or improving the documentation, your help is appreciated. Please fork the repository, create a new branch, and submit a pull request with your changes. You can change the UI, add new features, or fix bugs as needed.
 
 ## Future Plans
 
@@ -53,21 +53,6 @@ We welcome contributions from the community! Whether you're interested in adding
 - **Enhanced User Profiles**: Allow users to customize their profiles with avatars, bios, and a list of their submissions.
 - **Mobile App**: Develop a mobile version of MythicRealm for on-the-go access.
 - **Story Generator**: Develop a story generator that can inspire users and enable them to co-author with help of ai.
-
-## Code Structure
-
-- **Frontend**: Contains the React components used for the user interface.
-
-  - **Components**: Individual reusable components such as Navbar, Footer, etc (ImageInput, RichEditor, SideDrawer components are not used in this project).
-  - **Pages**: auth -> Login page, Admin page -> Admin dashboard(can add topPicks manually from here.), etc.
-  - **Actions**: These are used to send api request to server and set the state in reducers folder.
-  - **State Management**: Managed using Redux. Key states include `articles`, `stories`, `story`, and `topPicks`.
-
-- **Backend**: Contains the server-side logic.
-
-  - **Routes**: Express routes for handling API requests.
-  - **Controllers**: These contain the logic part of routes.
-  - **Models**: Mongoose models for interacting with MongoDB.
 
 ## License
 

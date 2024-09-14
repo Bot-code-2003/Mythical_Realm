@@ -1,3 +1,5 @@
+// This page is used for uploading an article.
+
 import React, { useState, useEffect } from "react";
 import Compressor from "compressorjs";
 import { useDispatch } from "react-redux";
