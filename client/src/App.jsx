@@ -52,17 +52,6 @@ const App = () => {
         />
 
         <Route
-          path="/allPosts"
-          element={
-            <>
-              <Navbar />
-              <Section genre="All" />
-              <Footer />
-            </>
-          }
-        />
-
-        <Route
           path="/fantasy"
           element={
             <>
@@ -113,7 +102,6 @@ const App = () => {
               <Navbar />
               <HomePageNav />
               <Profile />
-
               <Footer />
             </>
           }
@@ -132,21 +120,25 @@ const App = () => {
         />
 
         <Route
-          path="allBlogs"
+          path="/allBlogs"
           element={
             <>
               <Navbar />
               <HomePageNav />
               <Blogs genre="All" />
-
               <Footer />
             </>
           }
         />
 
         <Route path="/upload" element={<Upload />} />
-        <Route path="/saved" />
-        <Route path="/testing" element={<UploadStory />} />
+
+        {/* To upload story (Admin only) */}
+        <Route
+          path={`/storyUpload/${import.meta.env.VITE_ROUTE_SECRET}`}
+          element={<UploadStory />}
+        />
+
         <Route
           path="/allStories"
           element={

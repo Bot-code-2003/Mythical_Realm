@@ -1,3 +1,9 @@
+/**
+ * This page has detailed story like it contains the story desc, img and chapters related to that story.
+ * It uses the story state from Redux store (if user clicks or opens the story in the same page).
+ * It also fetches the story from the server (if it is not found in the Redux store || if user opens it in new tap the state is cleared).
+ */
+
 import React, { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -43,30 +49,6 @@ const DetailedStory = () => {
       .replace(/^-+/, "")
       .replace(/-+$/, "");
   };
-
-  const handleChapterClick = (
-    storyId,
-    storyCategory,
-    storyName,
-    chapterName,
-    chapterId
-  ) => {
-    const slugifiedChapterName = slug(chapterName);
-    const slugifiedStoryName = slug(storyName);
-    const slugifiedStoryCategory = slug(storyCategory);
-
-    navigate(
-      `/story/${slugifiedStoryCategory}/${slugifiedStoryName}/chapter/${slugifiedChapterName}?storyId=${storyId}&chapterId=${chapterId}`
-    );
-  };
-
-  // if (loading) {
-  //   return (
-  //     <div className="flex items-center justify-center h-screen">
-  //       <CircularProgress color="primary" />
-  //     </div>
-  //   );
-  // }
 
   if (!story) {
     return (

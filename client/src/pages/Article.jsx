@@ -1,3 +1,10 @@
+/**
+ * This is used to render a single blog/ article.
+ * The article is fetched from the state "articles".
+ * path="/article/:slugTitle/:slugGenre/:id"
+ * it gets the id from the params and uses it to find the specified article in articles.
+ */
+
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; // Import useParams
@@ -15,6 +22,7 @@ const Article = () => {
   // Find the article that matches the id from the URL params
   const article = articles.find((article) => article._id === id);
 
+  //To scroll the page to top.
   useEffect(() => {
     window.scrollTo(0, 0);
     // Simulate loading for effect (remove if not needed)
@@ -38,6 +46,7 @@ const Article = () => {
     );
   }
 
+  // If article is not found then show a lottie animation.
   if (!article) {
     return (
       <div className="flex flex-col justify-center items-center">

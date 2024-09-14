@@ -1,3 +1,11 @@
+/**
+ * This component is used to show the stories
+ * Each story is a seperate component found in the components folder.
+ * It fetched the stories from the state called "stories" and maps each story to the Story.jsx component
+ * If genre="All" the it fetches all the stories.
+ * If genre is a specific like Fantasy, etc it only shows them.
+ */
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStories } from "../actions/story"; // Ensure the path is correct
@@ -11,6 +19,7 @@ const StoryList = ({ genre }) => {
   const [loading, setLoading] = useState(true);
   const stories = useSelector((state) => state.stories);
 
+  // Change the browser tab name resembeling to the page and scroll to top after content is loaded.
   useEffect(() => {
     document.title = `Mythical Realm | ${genre} Stories`;
     // Disable browser's automatic scroll restoration
@@ -24,6 +33,7 @@ const StoryList = ({ genre }) => {
     }, 100); // Slight delay to allow the page to fully load
   }, []);
 
+  //the getStories sets state "stories" with the stories of specified {genre}.
   useEffect(() => {
     const fetchData = async () => {
       try {

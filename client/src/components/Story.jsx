@@ -1,17 +1,20 @@
+/**
+ * This is the base story component that is used where ever it is needed.
+ */
+
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Corrected import
 import { handleDeleteStory } from "../actions/story";
 import { useDispatch } from "react-redux";
 
 const Story = ({ story }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const [Admin, setAdmin] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check if the user is admin
+    // Check if the user is admin so we can show the delete button.
     const storedUser = JSON.parse(localStorage.getItem("Profile"));
     const token = storedUser?.token;
     if (token) {
@@ -32,6 +35,7 @@ const Story = ({ story }) => {
       .replace(/-+$/, "");
   };
 
+  // Handle delete story
   const handleDelete = async (id) => {
     try {
       if (window.confirm("Are you sure you want to delete this story?")) {

@@ -1,7 +1,9 @@
+/**
+ * This page has detailed chapter like it contains the chapter desc, image and story.
+ */
+
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Lottie from "lottie-react";
-import emptyAnimation from "../Lottie/search.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getStory } from "../actions/story";
 import { CircularProgress } from "@mui/material";
@@ -76,12 +78,6 @@ const DetailedChapter = () => {
   if (!story || currentChapterIndex === null) {
     return (
       <div className="flex flex-col justify-center min-h-[50vh] items-center">
-        {/* <Lottie
-          animationData={emptyAnimation}
-          loop={true}
-          style={{ width: "50%" }}
-        />
-        <p className="text-xl font-bold text-gray-700">No chapter available</p> */}
         <CircularProgress />
       </div>
     );

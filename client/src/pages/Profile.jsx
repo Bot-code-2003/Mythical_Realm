@@ -1,3 +1,11 @@
+/**
+ * This is the profile page.
+ * Page still is under construction. No functionality yet.
+ * Only displays the email of the user.
+ *
+ * Future plans is to display the liked, purchased, saved stories etc.
+ */
+
 import React from "react";
 import { jwtDecode } from "jwt-decode";
 

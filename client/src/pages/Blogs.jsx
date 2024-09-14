@@ -1,3 +1,9 @@
+/**
+ * This is the blogs page.
+ * Same as storyList page it also fetches articles from the server and shows them.
+ * for now the genre is hardcoded ("All").
+ */
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getArticle, handleDelete } from "../actions/article";
@@ -15,6 +21,7 @@ const Blogs = ({ genre }) => {
 
   const [Admin, setAdmin] = useState(false);
 
+  // To scroll the page to top.
   useEffect(() => {
     // Disable browser's automatic scroll restoration
     if ("scrollRestoration" in window.history) {
@@ -27,6 +34,7 @@ const Blogs = ({ genre }) => {
     }, 100); // Slight delay to allow the page to fully load
   }, []);
 
+  // Check if the user is an admin or not
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("Profile"));
     const token = storedUser?.token;
@@ -41,9 +49,10 @@ const Blogs = ({ genre }) => {
     }
   }, [location, Admin]);
 
+  //To get articles from the state.
   const articles = useSelector((state) => state.articles);
-  console.log("articles", articles);
 
+  //To set the title and fetch the articles and populate the articles state.
   useEffect(() => {
     document.title = `Mythical Realm | ${genre} Articles`;
     const fetchData = async () => {
