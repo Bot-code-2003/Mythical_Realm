@@ -7,8 +7,10 @@ import jwt from "jsonwebtoken";
 // };
 
 export const handleLogin = async (req, res) => {
-  const { email, password } = req.body;
+  // const email = req.body.email;
+  // const password = req.body.password;
 
+  const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
 
